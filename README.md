@@ -22,6 +22,9 @@ A desktop app for logging what you do each day (study, cycling, exercise, projec
 - **Custom app icon**: generated automatically on first run.
 - **Private and offline**: no accounts, no network access, no telemetry.
 
+
+![image alt]()
+
 ## Requirements
 
 - Python 3.9 or newer, with Tkinter
