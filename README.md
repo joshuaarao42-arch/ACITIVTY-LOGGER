@@ -34,7 +34,7 @@ On some Linux distributions Tkinter is a separate package (for example `sudo apt
 ```bash
 git clone https://github.com/<your-username>/<your-repo>.git
 cd <your-repo>
-pip install customtkinter pillow matplotlib
+pip install -r requirements.txt
 ```
 
 ## Usage
@@ -91,7 +91,7 @@ Choose a period on the **Report** page, or pick **Custom range** and enter dates
 
 ## Your data
 
-Everything lives in `activity_logger.db`. Copy that file to back it up or move your history to another computer. Delete it to start fresh. The file is created next to the script and should not be committed to Git (see the `.gitignore` suggestion below).
+Everything lives in `activity_logger.db`. Copy that file to back it up or move your history to another computer. Delete it to start fresh. The file is created next to the script and should not be committed to Git (the included `.gitignore` handles this).
 
 ## Project structure
 
@@ -99,16 +99,9 @@ Everything lives in `activity_logger.db`. Copy that file to back it up or move y
 .
 ├── activity_logger_ctk.py   # the whole application
 ├── README.md
-├── requirements.txt         # optional: customtkinter, pillow, matplotlib
+├── requirements.txt         # customtkinter, pillow, matplotlib
+├── LICENSE                  # MIT
 └── .gitignore               # keeps your personal data out of the repo
-```
-
-Suggested `.gitignore`:
-
-```
-activity_logger.db
-__pycache__/
-*.pyc
 ```
 
 ## Troubleshooting
@@ -129,4 +122,4 @@ Issues and pull requests are welcome. For larger changes, please open an issue f
 
 ## License
 
-Copyright (c) 2026 Joshua C. Arao. Released under the [MIT License](LICENSE). Add a `LICENSE` file to the repository (GitHub can generate one for you when you create the repo or from **Add file > Create new file > LICENSE**).
+Copyright (c) 2026 Joshua C. Arao. Released under the [MIT License](LICENSE).
