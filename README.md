@@ -24,7 +24,7 @@ A desktop app for logging what you do each day (study, cycling, exercise, projec
 
 
 ![image alt](https://github.com/joshuaarao42-arch/ACITIVTY-LOGGER/blob/main/IMAGES/Screenshot%202026-10-28%20172142.png?raw=true)
-![image alt]()
+![image alt](https://github.com/joshuaarao42-arch/ACITIVTY-LOGGER/blob/main/IMAGES/Screenshot%202026-10-28%20172153.png?raw=true)
 ![image alt]()
 ![image alt]()
 
