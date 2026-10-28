@@ -23,7 +23,7 @@ A desktop app for logging what you do each day (study, cycling, exercise, projec
 - **Private and offline**: no accounts, no network access, no telemetry.
 
 
-![image alt]()
+![image alt](https://github.com/joshuaarao42-arch/ACITIVTY-LOGGER/blob/main/IMAGES/Screenshot%202026-10-28%20172142.png?raw=true)
 ![image alt]()
 ![image alt]()
 ![image alt]()
