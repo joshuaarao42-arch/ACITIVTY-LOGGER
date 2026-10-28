@@ -1,7 +1,3 @@
-"""
-Personal Activity Logger - CustomTkinter edition
-Requires:  pip install customtkinter pillow matplotlib
-"""
 import csv
 import html
 import re
@@ -20,10 +16,10 @@ import customtkinter as ctk
 import matplotlib
 
 matplotlib.use("TkAgg")
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg  # noqa: E402
-from matplotlib.figure import Figure  # noqa: E402
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg  
+from matplotlib.figure import Figure  
 
-# ----------------------------------------------------------------- Constants
+#Constants
 APP_DIR = Path(__file__).resolve().parent
 DB_PATH = APP_DIR / "activity_logger.db"
 ICON_PATH = APP_DIR / "activity_logger.ico"
@@ -76,7 +72,7 @@ FONT_TK_BOLD = ("Segoe UI", 10, "bold")
 FONT_MONO = ("Consolas", 10)
 
 
-# ------------------------------------------------------------------ App icon
+# App icon
 def make_icon_image(size=256):
     """Draw the app icon (rounded glacier tile, progress ring, check mark) with Pillow."""
     from PIL import Image, ImageDraw
@@ -128,7 +124,7 @@ def set_windows_app_id():
             pass
 
 
-# ------------------------------------------------- Helpers: parsing/formatting
+# Helpers: parsing/formatting
 def parse_duration(text):
     """Turn '45', '1:30', '1h30m', '2h', '45min' into minutes."""
     t = text.strip().lower().replace(" ", "")
@@ -183,7 +179,7 @@ def clip(text, width):
     return text if len(text) <= width else text[: width - 1] + "..."
 
 
-# -------------------------------------- Helpers: summaries, streaks, buckets
+# Helpers: summaries, streaks, buckets
 def group_start(d, period):
     if period == "Weekly":
         return d - timedelta(days=d.weekday())  # Monday
@@ -251,14 +247,14 @@ def build_buckets(view, today):
             s = date(y, m, 1)
             nxt = date(y + (m == 12), (m % 12) + 1, 1)
             buckets.append((s.strftime("%b %Y"), s, nxt - timedelta(days=1)))
-    else:  # Last 14 days
+    else:  
         for i in range(13, -1, -1):
             d = today - timedelta(days=i)
             buckets.append((d.strftime("%d %b"), d, d))
     return buckets
 
 
-# ------------------------------------ Report: data, text and HTML rendering
+# Report: data, text and HTML rendering
 def resolve_range(name, today, bounds, custom_from="", custom_to=""):
     """Turn a range name into (start_date, end_date)."""
     if name == "This week":
@@ -529,7 +525,7 @@ def report_to_html(rep, colors, auto_print=True):
             f"<body>{''.join(body)}{script}</body></html>")
 
 
-# ------------------------------------------------------------- Database layer
+# Database layer
 class Database:
     def __init__(self, path):
         self.conn = sqlite3.connect(str(path))
@@ -629,7 +625,7 @@ class Database:
         self.conn.close()
 
 
-# ---------------------------------------------------------- Widget factories
+# Widget factories
 def make_button(parent, text, command, kind="soft", **kw):
     styles = {
         "accent": dict(fg_color=ACCENT, hover_color=ACCENT_HOVER, text_color="white"),
@@ -686,7 +682,7 @@ class StatCard(ctk.CTkFrame):
         self.sub.configure(text=sub)
 
 
-# ------------------------------------------------------------ Main application
+# Main application
 class ActivityLoggerApp(ctk.CTk):
     COLUMNS = (
         ("date", "Date", 100, "w"),
@@ -729,7 +725,7 @@ class ActivityLoggerApp(ctk.CTk):
         self.protocol("WM_DELETE_WINDOW", self.on_close)
         self.refresh_all()
 
-    # ------------------------------------------------------------------ Icon --
+    # icon --
     def _build_icon(self):
         try:
             from PIL import ImageTk
@@ -738,7 +734,6 @@ class ActivityLoggerApp(ctk.CTk):
         except Exception:
             pass
         if sys.platform.startswith("win") and ensure_icon_file():
-            # CustomTkinter sets its own icon shortly after start-up, so ours must come later.
             self.after(250, lambda: self._safe_iconbitmap())
 
     def _safe_iconbitmap(self):
@@ -747,7 +742,7 @@ class ActivityLoggerApp(ctk.CTk):
         except Exception:
             pass
 
-    # --------------------------------------------------------------- Styling --
+    # Styling --
     def _build_ttk_style(self):
         s = ttk.Style(self)
         s.theme_use("clam")
@@ -769,7 +764,7 @@ class ActivityLoggerApp(ctk.CTk):
             tree.tag_configure("even", background=pick(SOFT))
         self.canvas.get_tk_widget().configure(bg=pick(CARD))
 
-    # ---------------------------------------------------------------- Layout --
+    # Layout --
     def _build_layout(self):
         self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(0, weight=1)
@@ -885,7 +880,7 @@ class ActivityLoggerApp(ctk.CTk):
         self._apply_report_tags()
         self.refresh_chart()
 
-    # ------------------------------------------------------- Activities page --
+    # Activities page --
     def _build_activities_page(self, parent):
         parent.grid_columnconfigure(1, weight=1)
         parent.grid_rowconfigure(1, weight=1)
@@ -953,7 +948,7 @@ class ActivityLoggerApp(ctk.CTk):
         for entry in (self.ent_name, self.ent_duration, self.ent_date):
             entry.bind("<Return>", self.on_save)
 
-        # --- history card
+        # history card
         right = card(parent)
         right.grid(row=1, column=1, sticky="nsew")
         right.grid_columnconfigure(0, weight=1)
@@ -997,7 +992,7 @@ class ActivityLoggerApp(ctk.CTk):
         ctk.CTkLabel(right, textvariable=self.status_var, text_color=MUTED, font=font(9)).grid(
             row=2, column=0, sticky="w", padx=16, pady=(8, 12))
 
-    # ---------------------------------------------------------- Summary page --
+    # Summary page --
     def _build_summary_page(self, parent):
         parent.grid_columnconfigure(0, weight=3)
         parent.grid_columnconfigure(1, weight=2)
@@ -1067,7 +1062,7 @@ class ActivityLoggerApp(ctk.CTk):
             self.tree_cat.column(key, width=int(width * self._scale), anchor=anchor, stretch=(key == "category"))
         self.tree_cat.grid(row=0, column=0, sticky="nsew")
 
-    # ---------------------------------------------------------- Charts page --
+    # Charts page --
     def _build_charts_page(self, parent):
         parent.grid_columnconfigure(0, weight=1)
         parent.grid_rowconfigure(1, weight=1)
@@ -1092,7 +1087,7 @@ class ActivityLoggerApp(ctk.CTk):
         self.canvas = FigureCanvasTkAgg(self.fig, master=box)
         self.canvas.get_tk_widget().grid(row=1, column=0, sticky="nsew", padx=12, pady=(0, 12))
 
-    # ---------------------------------------------------------- Report page --
+    # Report page --
     def _build_report_page(self, parent):
         parent.grid_columnconfigure(0, weight=1)
         parent.grid_rowconfigure(2, weight=1)
@@ -1133,7 +1128,6 @@ class ActivityLoggerApp(ctk.CTk):
                                          border_width=1, border_color=BORDER, wrap="word",
                                          font=font(11), state="disabled")
         self.txt_report.grid(row=2, column=0, columnspan=2, sticky="nsew")
-        # CTkTextbox forbids fonts in tag_config, so style tags on the inner tk.Text widget
         self._rt = self.txt_report._textbox
         self._rt.configure(padx=28, pady=20, cursor="arrow")
 
@@ -1148,7 +1142,7 @@ class ActivityLoggerApp(ctk.CTk):
         t.tag_configure("item", font=FONT_TK, foreground=pick(TEXT), lmargin1=16, lmargin2=30)
         t.tag_configure("note", font=("Segoe UI", 9, "italic"), foreground=pick(MUTED), lmargin1=30, lmargin2=30)
 
-    # ------------------------------------------------------------ Refreshing --
+    # Refreshing --
     def refresh_all(self):
         self.refresh_categories()
         self.refresh_stats()
@@ -1349,7 +1343,7 @@ class ActivityLoggerApp(ctk.CTk):
         self.txt_report.configure(state="disabled")
         self._rt.yview_moveto(0)
 
-    # ------------------------------------------------------------ Form logic --
+    # Form logic --
     def _on_search_change(self, *_):
         if self._search_job:
             self.after_cancel(self._search_job)
@@ -1426,7 +1420,7 @@ class ActivityLoggerApp(ctk.CTk):
         self.btn_update.configure(state="normal" if count == 1 else "disabled")
         self.btn_delete.configure(state="normal" if count >= 1 else "disabled")
 
-    # --------------------------------------------------------------- Actions --
+    # Actions --
     def on_select(self, _event=None):
         sel = self.tree.selection()
         if len(sel) == 1:
@@ -1506,7 +1500,7 @@ class ActivityLoggerApp(ctk.CTk):
             return
         messagebox.showinfo("Export CSV", f"Exported {plural(len(ids), 'record')} (as currently shown) to:\n{path}")
 
-    # ---- report actions ----
+    # report actions 
     def _report_or_warn(self):
         self.refresh_report()
         if not self._report:
@@ -1556,7 +1550,7 @@ class ActivityLoggerApp(ctk.CTk):
             return
         self._toast_msg("Report saved.")
 
-    # --------------------------------------------------------------- Sorting --
+    # Sorting --
     def sort_by(self, col):
         reverse = (not self._sort_rev) if self._sort_col == col else False
         self._apply_sort(col, reverse)
@@ -1579,7 +1573,7 @@ class ActivityLoggerApp(ctk.CTk):
             arrow = (" \u25BC" if reverse else " \u25B2") if k == col else ""
             self.tree.heading(k, text=label + arrow)
 
-    # ----------------------------------------------------------------- Close --
+    # Close --
     def on_close(self):
         self.db.close()
         self.destroy()
