@@ -24,6 +24,9 @@ A desktop app for logging what you do each day (study, cycling, exercise, projec
 
 
 ![image alt]()
+![image alt]()
+![image alt]()
+![image alt]()
 
 ## Requirements
 
