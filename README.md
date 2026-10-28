@@ -27,15 +27,7 @@ A desktop app for logging what you do each day (study, cycling, exercise, projec
 - Python 3.9 or newer, with Tkinter
 - `customtkinter`, `pillow`, `matplotlib`
 
-On some Linux distributions Tkinter is a separate package (for example `sudo apt install python3-tk`).
-
-## Installation
-
-```bash
-git clone https://github.com/<your-username>/<your-repo>.git
-cd <your-repo>
-pip install -r requirements.txt
-```
+On some Linux distributions, Tkinter is a separate package (for example, `sudo apt install python3-tk`).
 
 ## Usage
 
@@ -89,27 +81,6 @@ Choose a period on the **Report** page, or pick **Custom range** and enter dates
 | `Enter` | Add the entry, or update it if one is selected |
 | `Delete` | Delete the selected rows |
 
-## Your data
-
-Everything lives in `activity_logger.db`. Copy that file to back it up or move your history to another computer. Delete it to start fresh. The file is created next to the script and should not be committed to Git (the included `.gitignore` handles this).
-
-## Project structure
-
-```
-.
-├── activity_logger_ctk.py   # the whole application
-├── README.md
-├── requirements.txt         # customtkinter, pillow, matplotlib
-├── LICENSE                  # MIT
-└── .gitignore               # keeps your personal data out of the repo
-```
-
-## Troubleshooting
-
-- **The taskbar icon didn't change (Windows):** delete `activity_logger.ico`, restart the app, and if needed restart Explorer. Windows caches icons.
-- **`No module named customtkinter`:** run the install command with the same Python you use to launch the app.
-- **Blurry window on a high-DPI screen:** make sure no compatibility setting is overriding DPI scaling for `python.exe`.
-- **Tkinter errors on Linux:** install your distribution's Tkinter package.
 
 ## Contributing
 
